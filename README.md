@@ -15,11 +15,11 @@ To install a virtual environment on your local machine, follow the link provided
 3. Activate Virtual Environment, and clone the repository.
 
 ```bash
-  git clone https://github.com/sm-wyBme/BlogAPP.git
+  git clone https://github.com/sm-wyBme/BlogBEE.git
 ```
 Move into the project directory
 ```bash
-  cd BlogAPP
+  cd BlogBEE
 ```
 4. Install the dependencies on the requirements.txt file.
 
@@ -97,9 +97,9 @@ This Project would not have been possible without proper research and proper gui
 
 The best help one could ask for in this project, is the Offical Django documentation which in itself is a treasure trove.
 
-Many a times I was confused about certain functionalities, and as beginner my greatest nightmares were bugs. This Websites such as StackOverFlow helped a lot while debugging and understanding certain concepts.
+Many a times I was confused about certain functionalities, and as beginner my greatest nightmares were bugs. This Websites takes inspirations from credible sources such as StackOverFlow, which helped a lot while debugging and understanding certain concepts.
 
-The subreddit r/Django was of great help too
+The subreddit r/django was of great help too.
 
 
 
