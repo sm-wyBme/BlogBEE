@@ -1,0 +1,8 @@
+asgiref==3.5.2
+backports.zoneinfo==0.2.1
+Django==4.0.5
+django-tinymce==3.4.0
+numpy==1.23.1
+opencv-python==4.6.0.66
+Pillow==9.2.0
+sqlparse==0.4.2

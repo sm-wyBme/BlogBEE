@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+      <div class = 'container-fluid '>
+        <div class="row justify-content-center">
+          <div class="card border-primary m-3" style="max-width: 75rem;">
+              <div class="d-flex flex-column pb-2 mt-3">
+                  <img class="img-fluid mx-auto d-block" src="{% static 'custom_images/Logo.png' %}" alt="Logo" width="72" height="72">
+              </div>
+              <div class="card-body text-primary">
+                <!-- <h5 class="card-title text-center mb-3">Write a Blog</h5> -->
+                <form method = "POST" action="">
+
+                    {% csrf_token %}
+                    <label for="blog-topic">Enter/Select a Topic</label>
+                    <input class = 'form-control' required_type = 'text' value = "{{blog.topic.name}}" name = "topic" list = "topic-list"/>
+                    <datalist id = "topic-list">
+                        <select id = "blog_topic">
+                            {% for topic in topics %}
+                            <option value="{{topic.name}}"> {{topic.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </datalist>
+                    <br>
+                    <div>
+                        <label for="blog-title">Enter a Title</label>
+                        <input type="text" name="title" id="inputTitle" class="form-control" value="{{blog.title}}">
+                    </div>
+                    <br>
+                    <!-- <div>
+                        <label for="blog-image">Upload an Image</label>
+                        <input type="file" name="image" class="form-control">
+                    </div> -->
+                    <br>
+                    <div class=text-center">
+                        <label for="blog-body">Write Your Blog here</label>
+                        <br>
+                        {{form.media}}
+                        {{form.body}}
+                    </div>
+                    <br>
+                    <input type="submit" class = "btn btn-outline-primary" value = "Submit">
+                </form>
+                <br>
+                <div class = 'text-center'>
+                  <span class="card-text">Not in the mood to write??</span>
+                  <a href="{% url 'home' %}" class="link-primary p-0" >Try Again Later</a>
+                </div>
+                
+              </div>
+            </div>
+        </div>
+  </div>
+  
+
+
+{% endblock content %}

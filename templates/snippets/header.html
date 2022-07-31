@@ -1,0 +1,47 @@
+{% load static %}
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <img src="{% static 'custom_images/Logo.png' %}" alt="Logo" width="30px" height="30px">
+      <span class = 'fw-bold fst-italic'>BlogBEE</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+        </li> -->
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'account:view' request.user.id %}"><span class = 'text-info'>Hi</span> @{{request.user}}
+            <img class = 'account-image rounded-circle m-auto' src="{{request.user.profile_image.url}}" alt="User Image" width="30px" height="30px">
+            </a>
+          </li>
+          <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Settings
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'account:view' request.user.id %}">Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+          </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class = 'nav-link active' aria-current="page" href="{% url 'register' %}">Register</a>
+        </li>
+        {% endif %}
+        
+      </ul>
+        <form action="{% url 'home' %}" method="GET" class = 'd-flex'>
+          <input class = 'form-control me-2' type="text" name="q" placeholder="Search">
+        </form>
+        <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button> -->
+    </div>
+</nav>

@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class = 'container-fluid m-2'>
+    <div class="row justify-content-center">
+      <div class="card border-primary m-3" style="max-width: 30rem;">
+          <!-- <div class="card-header text-center">Sign up</div> -->
+          <div class="d-flex flex-column pb-2 mt-3">
+              <img class="img-fluid mx-auto d-block" src="{% static 'custom_images/Logo.png' %}" alt="Logo" width="72" height="72">
+          </div>
+          <div class="card-body text-primary">
+            <h5 class="card-title text-center mb-3">Update Blog Image</h5>
+            <form action="{% url 'base:update-blog-image' blog.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- {{imageForm}} -->
+                <input type="file" name="image" class="form-control">
+                <br>
+                <button class = "btn btn-primary" type="submit">Upload</button>
+            </form>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

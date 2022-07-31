@@ -1,0 +1,122 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+  <section style="background-color: #eee;">
+    <div class="container py-5">
+      <div class="row">
+        <!-- user details -->
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <img src="{{user.profile_image.url}}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+              {% if user.name != None %}
+              <h5 class="my-2">{{user.name}}</h5>
+              {% endif %}
+              <p class="text-muted mb-3">@{{user.username}}</p>
+              {% if user == request.user %}
+              <div class="d-flex justify-content-center mb-2">
+                <a class="btn btn-primary me-1" href="{% url 'account:edit' user.id %}" role="button" >Update Profile</a>
+                <a class="btn btn-outline-success" href="{% url 'account:update-image' user.id %}" role="button">Upload Picture</a>
+              </div>
+              <div class ='text-center'>
+                <a class="btn btn-outline-info" href="{% url 'password_change' %}" role="button">Change Password</a>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- blogs -->
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                  {% if user.name != None %}
+                  <p class="text-muted mb-0">{{user.name}}</p>
+                  {% endif %}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  {% if user.hide_email == False %}
+                  <p class="text-muted mb-0">{{user.email}}</p>
+                  {% else %}
+                    {% if user.id == request.user.id %}
+                    <p class="text-muted mb-0">{{user.email}} <span class = "text-muted mb-0 fst-italic">(hidden)</span></p>
+                    {% else %}
+                    <p class="text-muted fst-italic mb-0">****************</p>
+                    {%endif %}
+                  {% endif %}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-12">
+                  <p class="mb-0 text-center">About me</p>
+                </div>
+                
+                <div class="col-sm-12">
+                  {% if user.bio != None %}
+                  <p class="text-muted mb-0 text-center">{{user.bio}}</p>
+                  {% endif %}
+                </div>
+              </div>
+              <!-- <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Mobile</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">(098) 765-4321</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="row">
+            {% for blog in blogs %}
+            <div class="col-md-6">
+              <div class="card mb-4">
+                <div class="card-body mb-4">
+                  <h5 class="card-title">{{blog.title}}</h5>
+                  <p class="card-text">{{blog.created}}</p>
+                  <a href="{% url 'base:blog' blog.id %}" class="btn btn-outline-success">Read</a>
+                </div>
+                {% if request.user == user %}
+                <div class = 'card-footer'>
+                  <a class="btn btn-primary" href="{% url 'base:update-blog' blog.id %}" role="button">Update Blog</a>
+                  <a class="btn btn-danger" href="{% url 'base:delete-blog' blog.id %}" role="button">Delete Blog</a>
+                  
+                  <!-- <a href=>Edit Blog</a> -->
+                  <!-- <a href="{% url 'base:delete-blog' blog.id %}">Delete Blog</a> -->
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

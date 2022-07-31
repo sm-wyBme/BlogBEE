@@ -1,0 +1,67 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class = 'container-fluid m-2'>
+      <div class="row justify-content-center">
+        <div class="card border-primary m-5" style="max-width: 30rem;">
+            <!-- <div class="card-header text-center">Sign up</div> -->
+            <div class="d-flex flex-column pb-2 mt-3">
+				<img class="img-fluid mx-auto d-block" src="{% static 'custom_images/Logo.png' %}" alt="Logo" width="72" height="72">
+			</div>
+            <div class="card-body text-primary">
+              <h5 class="card-title text-center mb-3">Update Account</h5>
+              <form method="post" action="">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input class="d-none" type="file" id="id_profile_image" name="profile_image" onchange="readURL(this)">
+			  		<h6 class="mt-4 field-heading">Email</h6>
+			  		<input type="email" name="email" id="id_input_email" class="form-control" placeholder="Email address" required autofocus value={{form.initial.email}}>
+			  		<h6 class="mt-4 field-heading">Username</h6>
+			  		<input type="text" name="username" id="id_input_username" class="form-control" placeholder="Username" required
+					value="{{form.initial.username}}">
+					<h6 class="mt-4 field-heading">Name</h6>
+			  		<input type="text" name="name" id="id_input_name" class="form-control" placeholder="Name" required
+					value="{{form.initial.name}}">
+                    <h6 class="mt-4 field-heading">BIO</h6>
+			  		<input type="text" name="bio" id="id_input_bio" class="form-control" placeholder="Bio" required
+					value="{{form.initial.bio}}">
+					<div class="mt-4 checkbox">
+						<label>
+							<input type="checkbox" name="hide_email" id="id_input_hide_email" {% if form.initial.hide_email %}checked{%endif%}>
+							Hide Email
+						</label>
+			  			
+					</div>
+
+					{% for field in form %}
+					<p>
+					{% for error in field.errors %}
+					<p style="color: red">{{ error }}</p>
+					{% endfor %}
+					</p>
+					{% endfor %}
+					{% if form.non_field_errors %}
+					<div style="color: red">
+					<p>{{form.non_field_errors}}</p>
+					</div>
+
+					{% endif %}
+
+				<button class="btn btn-md btn-outline-primary btn-block" type="submit">Update</button>
+              </form>
+              <!-- <div class = 'text-center'>
+                <span class="card-text">Haven't signed up yet?</span>
+                <a href="{% url 'register' %}" class="link-primary p-0" >Sign up</a>
+                <div>
+                  <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                </div>
+              </div> -->
+              
+            </div>
+          </div>
+      </div>
+     
+</div>
+
+{% endblock content %}

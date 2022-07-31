@@ -1,0 +1,153 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+  .blog_title{
+    font-family: 'Times New Roman', Times, serif;
+  }
+  .id_profile_image{
+    margin: auto;
+    width: 200px;
+  }
+
+</style>
+
+  <div class="container">
+    <!--Grid row-->
+    <div class="row">
+      <!--Grid column-->
+      <div class="col-md-8 mb-4">
+        <div id="intro" class="p-5 text-center bg-light">
+          <h1 class="blog_title mb-0 h3">{{blog.title}}</h1>
+        </div>
+        <!--Section: Post data-mdb-->
+        
+        <section class="border-bottom mb-4">
+        
+          <img src="{% static 'custom_images/dummy_blog_image.jpg' %}"
+            class="img-fluid shadow-2-strong rounded-1 mb-4" alt="blog_image" style = 'width: 100%;' />
+
+          <div class="row align-items-center mb-4">
+            <div class="col-lg-6 text-center text-lg-start mb-3 m-lg-0">
+              <img src="{{blog.author.profile_image.url}}" class="rounded-5 shadow-1-strong me-2"
+                height="35" alt="" loading="lazy" />
+              <span> Published <u>{{blog.created}}</u> by</span>
+              <a href="{% url 'account:view' blog.author.id %}" class="text-dark">@{{blog.author}}</a>
+            </div>
+
+            <div class="col-lg-6 text-center text-lg-end">
+              <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #3b5998;">
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #55acee;">
+                <i class="fab fa-twitter"></i>
+              </button>
+              <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #0082ca;">
+                <i class="fab fa-linkedin"></i>
+              </button>
+              <button type="button" class="btn btn-primary px-3 me-1">
+                <i class="fas fa-comments"></i>
+              </button>
+              <br>
+              <!-- {% if request.user == blog.author %}
+              <a class = "btn btn-outline-primary text-center mt-2" href="{% static 'custom_images/dummy_blog_image.png' %}">Update Image</a>
+              {% endif %} -->
+            </div>
+            
+          </div>
+        </section>
+        <!--Section: Post data-mdb-->
+
+        <!--Section: Text-->
+        <section>
+          {{blog.body | safe}}
+        </section>
+        <hr>
+        <p class = 'text-muted fst-italic'>Last Updated: {{blog.updated|timesince}}</p>
+        <br>
+        <!--Section: Text-->
+
+        <!--Section: Share buttons-->
+        
+
+        <!--Section: Comments-->
+        <hr>
+        <section class="border-bottom mb-3">
+          <p class="text-center"><strong>Comments: {{blog_comments.count}}</strong></p>
+
+          <!-- Comment -->
+          {% for comment in blog_comments %}
+          <div class="row mb-4">
+            <div class="col-2">
+              <img src="{{comment.author.profile_image.url}}"
+                class="img-fluid shadow-1-strong rounded-5" alt="Blog author" />
+            </div>
+
+            <div class="col-10">
+              <h5 class="mb-2"><strong>@{{comment.author}}</strong></h5>
+              <small class = 'text-muted'>{{comment.created | timesince}} ago</small>
+              <p class = 'fst-italic'>
+                {{comment.body}}
+              </p>
+              {% if request.user == comment.author %}
+              <a class="btn btn-danger btn-sm" href="{% url 'base:delete-comment' comment.id %}" role="button">Delete</a>
+              <!-- <a href="">Delete</a> -->
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        <!--Section: Reply-->
+        <section>
+          <p class="text-center"><strong>Leave a reply</strong></p>
+          <form method = "POST" action = "">
+            {% csrf_token %}
+            <!-- Name input -->
+            <input class = 'form-control' type = "text" name="body" placeholder="Add a comment">
+          </form>
+        </section>
+
+      </div>
+      <!--Grid column-->
+      <div class ='col-md-4'>
+        <section class="text-center border-top border-bottom py-4 mb-4">
+          <h4><strong>About the Author </strong></h4>
+          <br>
+          <section class="border-bottom mb-4 pb-4">
+            <div class="row">
+              <div class = 'id_profile_image'>
+                <img src="{{blog.author.profile_image.url}}"
+                  class="img-fluid shadow-1-strong rounded-3 mx-auto" alt="" />
+              </div>
+  
+              <div class>
+                <br>
+                <p><strong>@{{blog.author}}</strong></p>
+                <a href="{% url 'account:view' blog.author.id %}" class="btn btn-outline-success">Visit Profile</a>
+                <!-- <p class="mb-2"><strong>{{blog.author.name}}</strong></p> -->
+                <a href="" class="text-dark"><i class="fab fa-facebook-f me-1"></i></a>
+                <a href="" class="text-dark"><i class="fab fa-twitter me-1"></i></a>
+                <a href="" class="text-dark"><i class="fab fa-linkedin me-1"></i></a>
+              </div>
+            </div>
+          </section>
+
+          <button type="button" class="btn btn-primary me-1" style="background-color: #3b5998;">
+            <i class="fab fa-facebook-f"></i>
+          </button>
+          <button type="button" class="btn btn-primary me-1" style="background-color: #55acee;">
+            <i class="fab fa-twitter"></i>
+          </button>
+          <button type="button" class="btn btn-primary me-1" style="background-color: #0082ca;">
+            <i class="fab fa-linkedin"></i>
+          </button>
+        </section>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content %}
